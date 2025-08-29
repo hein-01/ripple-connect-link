@@ -49,7 +49,7 @@ export default function AuthForm({ mode }: AuthFormProps) {
   const checkRateLimit = async (email: string): Promise<boolean> => {
     try {
       const { data, error } = await supabase.rpc('check_rate_limit', { 
-        user_email: email 
+        email_input: email 
       });
       
       if (error) throw error;
@@ -63,8 +63,8 @@ export default function AuthForm({ mode }: AuthFormProps) {
   const logLoginAttempt = async (email: string, success: boolean) => {
     try {
       await supabase.rpc('log_login_attempt', {
-        user_email: email,
-        attempt_success: success
+        email_input: email,
+        success_input: success
       });
     } catch (error) {
       console.error('Error logging login attempt:', error);
@@ -109,7 +109,7 @@ export default function AuthForm({ mode }: AuthFormProps) {
           // Continue even if this fails
         }
 
-        const redirectUrl = `${window.location.origin}/`;
+        const redirectUrl = `${window.location.origin}/auth/callback`;
         
         const { error } = await supabase.auth.signUp({
           email: formData.email,

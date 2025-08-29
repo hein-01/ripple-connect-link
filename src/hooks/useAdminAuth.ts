@@ -5,7 +5,7 @@ import { supabase } from "@/integrations/supabase/client";
 interface AdminProfile {
   id: string;
   user_id: string;
-  admin_role: string;
+  admin_role: 'super_admin' | 'admin' | 'moderator';
   two_factor_enabled: boolean;
   two_factor_secret: string | null;
   created_at: string;
@@ -113,7 +113,7 @@ export function useAdminAuth() {
   const checkAdminRateLimit = async (email: string): Promise<boolean> => {
     try {
       const { data, error } = await supabase.rpc('check_admin_rate_limit', { 
-        user_email: email 
+        email_input: email 
       });
       
       if (error) throw error;
@@ -127,8 +127,8 @@ export function useAdminAuth() {
   const logAdminLoginAttempt = async (email: string, success: boolean) => {
     try {
       await supabase.rpc('log_admin_login_attempt', {
-        user_email: email,
-        attempt_success: success
+        email_input: email,
+        success_input: success
       });
     } catch (error) {
       console.error('Error logging admin login attempt:', error);

@@ -20,11 +20,6 @@ interface Business {
   rating: number;
   image_url: string;
   website: string;
-  product_images?: string[] | null;
-  business_options?: string[] | null;
-  starting_price?: string | null;
-  license_expired_date?: string | null;
-  products_catalog?: string | null;
 }
 
 const PopularBusinesses = () => {
@@ -38,7 +33,7 @@ const PopularBusinesses = () => {
 
   const fetchBusinesses = async () => {
     try {
-      // Query businesses table directly to get all fields including products_catalog
+      // Query businesses table with available fields only
       const { data, error } = await supabase
         .from('businesses')
         .select(`
@@ -50,12 +45,7 @@ const PopularBusinesses = () => {
           state,
           rating,
           image_url,
-          website,
-          product_images,
-          business_options,
-          starting_price,
-          license_expired_date,
-          products_catalog
+          website
         `)
         .order('created_at', { ascending: false })
         .limit(6);
@@ -65,10 +55,6 @@ const PopularBusinesses = () => {
         return;
       }
       
-      console.log('Fetched businesses data:', data);
-      if (data && data.length > 0) {
-        console.log('First business products_catalog:', data[0]?.products_catalog);
-      }
       setBusinesses(data || []);
     } catch (error) {
       console.error('Error:', error);
@@ -167,38 +153,14 @@ const PopularBusinesses = () => {
                   slidesPerView={1}
                   loop={true}
                   className="w-[320px] h-[200px]"
-                >
-                  {business.product_images && business.product_images.length > 0 ? (
-                    business.product_images.map((image, index) => (
-                      <SwiperSlide key={index}>
-                        <img
-                          src={image}
-                          alt={`${business.name} product ${index + 1}`}
-                          className="w-full h-[200px] object-cover"
-                        />
-                      </SwiperSlide>
-                    ))
-                  ) : (
-                    <SwiperSlide>
-                      <img
-                        src="https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=320&h=200&fit=crop"
-                        alt={`${business.name} products`}
-                        className="w-full h-[200px] object-cover"
-                      />
-                    </SwiperSlide>
-                  )}
-                  
-                  {/* Custom Navigation Arrows */}
-                  {business.product_images && business.product_images.length > 1 && (
-                    <>
-                      <div className={`swiper-button-prev-${business.id} absolute left-2 top-1/2 -translate-y-1/2 z-10 w-6 h-6 bg-white/80 rounded-full flex items-center justify-center cursor-pointer hover:bg-white transition-colors`}>
-                        <ChevronLeft className="w-3 h-3 text-gray-700" />
-                      </div>
-                      <div className={`swiper-button-next-${business.id} absolute right-2 top-1/2 -translate-y-1/2 z-10 w-6 h-6 bg-white/80 rounded-full flex items-center justify-center cursor-pointer hover:bg-white transition-colors`}>
-                        <ChevronRight className="w-3 h-3 text-gray-700" />
-                      </div>
-                    </>
-                  )}
+                 >
+                   <SwiperSlide>
+                     <img
+                       src={business.image_url || "https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=320&h=200&fit=crop"}
+                       alt={`${business.name} business`}
+                       className="w-full h-[200px] object-cover"
+                     />
+                   </SwiperSlide>
                 </Swiper>
                 
                 <Button
@@ -212,14 +174,10 @@ const PopularBusinesses = () => {
               
               <CardContent className="flex-1 p-3 flex flex-col justify-between">
                 <div className="space-y-2">
-                  <div className="flex items-center justify-between">
-                    <div className="text-sm text-muted-foreground">
-                      {business.starting_price ? (
-                        <span>
-                          <span className="text-primary">From</span> {business.starting_price}
-                        </span>
-                      ) : 'Price on request'}
-                    </div>
+                   <div className="flex items-center justify-between">
+                     <div className="text-sm text-muted-foreground">
+                       Price on request
+                     </div>
                     <div className="flex items-center gap-2">
                       <Facebook className="w-4 h-4 text-blue-600" />
                       <Instagram className="w-4 h-4 text-pink-600" />
@@ -234,9 +192,6 @@ const PopularBusinesses = () => {
                         alt="Business logo" 
                         className="w-10 h-10 rounded-md object-cover"
                       />
-                      {isLicenseValid(business.license_expired_date) && (
-                        <BadgeCheck className="w-4 h-4 text-white absolute -top-1 -right-1 rounded-full bg-primary" />
-                      )}
                     </div>
                     <div className="flex-1">
                       <h3 className="font-semibold text-sm text-foreground leading-tight line-clamp-2">
@@ -250,19 +205,6 @@ const PopularBusinesses = () => {
                     {business.city}, {business.state}
                   </p>
                   
-                  
-                  {/* Business Options */}
-                  {business.business_options && business.business_options.length > 0 && (
-                    <div className="flex flex-wrap gap-x-1 gap-y-1">
-                      {business.business_options.map((option, index) => (
-                        <div key={index}>
-                          <span className={`text-xs px-2 py-0.5 rounded border ${getOptionColors(index)}`}>
-                            {option}
-                          </span>
-                        </div>
-                      ))}
-                    </div>
-                  )}
                 </div>
                 
                 <div className="space-y-2 mt-2">
@@ -279,20 +221,11 @@ const PopularBusinesses = () => {
                       <DialogHeader>
                         <DialogTitle>{business.name} - Products Catalog</DialogTitle>
                       </DialogHeader>
-                      <div className="space-y-3">
-                        {parseProductsCatalog(business.products_catalog).length > 0 ? (
-                          parseProductsCatalog(business.products_catalog).map((product: string, index: number) => (
-                            <div key={index} className="flex items-center space-x-2 p-3 bg-muted/50 rounded-lg">
-                              <Check className="w-4 h-4 text-primary" />
-                              <span className="text-sm">{product}</span>
-                            </div>
-                          ))
-                        ) : (
-                          <div className="text-center py-8 text-muted-foreground">
-                            <p>No products catalog available</p>
-                          </div>
-                        )}
-                      </div>
+                       <div className="space-y-3">
+                         <div className="text-center py-8 text-muted-foreground">
+                           <p>No products catalog available</p>
+                         </div>
+                       </div>
                     </DialogContent>
                   </Dialog>
                   

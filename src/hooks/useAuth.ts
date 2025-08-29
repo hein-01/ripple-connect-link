@@ -5,10 +5,14 @@ import { supabase } from "@/integrations/supabase/client";
 interface UserProfile {
   id: string;
   user_id: string;
-  role: string;
+  role: 'user';
   display_name: string | null;
   avatar_url: string | null;
-  bio: string | null;
+  phone: string | null;
+  two_factor_enabled: boolean;
+  two_factor_secret: string | null;
+  business_name: string | null;
+  business_description: string | null;
   created_at: string;
   updated_at: string;
 }
