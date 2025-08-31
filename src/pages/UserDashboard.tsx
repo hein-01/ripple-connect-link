@@ -178,13 +178,21 @@ export default function UserDashboard() {
               <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
                 {userBusinesses.map((business) => (
                   <div key={business.id} className="relative">
-                    <Button
-                      onClick={() => handleEditBusiness(business)}
-                      className="absolute top-2 left-2 z-10 bg-destructive hover:bg-destructive/90 text-destructive-foreground px-2 py-1 h-auto text-xs rounded"
-                    >
-                      <Edit className="h-3 w-3 mr-1" />
-                      Edit
-                    </Button>
+                    <div className="absolute top-2 left-2 z-40 flex items-center gap-2">
+                      <div className="bg-primary text-primary-foreground px-2 py-1 rounded text-xs font-medium">
+                        {business.starting_price ? (
+                          <span>From {business.starting_price}</span>
+                        ) : 'Price on request'}
+                      </div>
+                      <Button
+                        onClick={() => handleEditBusiness(business)}
+                        size="sm"
+                        className="bg-destructive hover:bg-destructive/90 text-destructive-foreground px-2 py-1 h-auto text-xs rounded"
+                      >
+                        <Edit className="h-3 w-3 mr-1" />
+                        Edit
+                      </Button>
+                    </div>
                     <PopularBusinessCard business={business} />
                   </div>
                 ))}
