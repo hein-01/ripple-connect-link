@@ -36,13 +36,13 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
 const sidebarItems = [
   { title: "Dashboard", icon: Home, action: "dashboard" },
-  { title: "Profile Info", icon: User, action: "profile" },
-  { title: "Email Settings", icon: Mail, action: "email" },
-  { title: "Wishlists", icon: Heart, action: "wishlists" },
-  { title: "My Listings", icon: Building2, action: "listings" },
+  { title: "Saved Listings", icon: Heart, action: "wishlists" },
   { title: "Add Listing", icon: Plus, action: "add-listing" },
   { title: "Get Website + POS", icon: Globe, action: "website-pos" },
-  { title: "Subscription", icon: CreditCard, action: "subscription" },
+  { title: "My Listings", icon: Building2, action: "listings" },
+  { title: "Subscriptions", icon: CreditCard, action: "subscription" },
+  { title: "Profile Info", icon: User, action: "profile" },
+  { title: "Email Settings", icon: Mail, action: "email" },
 ];
 
 export default function UserDashboard() {
@@ -155,7 +155,7 @@ export default function UserDashboard() {
       case "wishlists":
         return (
           <div className="space-y-6">
-            <h2 className="text-2xl font-bold">My Wishlists</h2>
+            <h2 className="text-2xl font-bold">Saved Listings</h2>
             <Card>
               <CardContent className="pt-6">
                 <p className="text-muted-foreground text-center py-8">
