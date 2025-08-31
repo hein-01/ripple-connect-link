@@ -390,7 +390,7 @@ export const PopularBusinessCard = ({ business }: PopularBusinessCardProps) => {
               <img 
                 src={business.image_url || "https://images.unsplash.com/photo-1592659762303-90081d34b277?w=40&h=40&fit=crop"} 
                 alt="Business logo" 
-                className="w-10 h-10 rounded-md object-cover border border-amber-700"
+                className="w-10 h-10 rounded-md object-cover border border-gray-300"
               />
             </div>
             <div className="flex-1">
