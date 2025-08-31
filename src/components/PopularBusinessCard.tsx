@@ -302,7 +302,7 @@ export const PopularBusinessCard = ({ business }: PopularBusinessCardProps) => {
               size="sm"
               className="h-4 px-2 text-[9px] text-black bg-white border-gray-300 hover:bg-gray-50"
             >
-              Reviews
+              REVIEWS
             </Button>
           </DialogTrigger>
           <DialogContent className="max-w-lg max-h-[80vh] overflow-y-auto">
@@ -464,32 +464,26 @@ export const PopularBusinessCard = ({ business }: PopularBusinessCardProps) => {
            </DialogContent>
          </Dialog>
          
-         <div className="flex items-center gap-2">
-           {business.facebook_page && (
-             <div 
-               className="w-7 h-7 rounded-full border border-border shadow-md flex items-center justify-center bg-background hover:shadow-lg transition-shadow cursor-pointer"
-               onClick={() => window.open(business.facebook_page, '_blank')}
-             >
-               <Facebook className="w-3 h-3 text-blue-600" />
-             </div>
-           )}
-           {business.tiktok_url && (
-             <div 
-               className="w-7 h-7 rounded-full border border-border shadow-md flex items-center justify-center bg-background hover:shadow-lg transition-shadow cursor-pointer"
-               onClick={() => window.open(business.tiktok_url, '_blank')}
-             >
-               <Instagram className="w-3 h-3 text-pink-600" />
-             </div>
-           )}
-           {business.phone && (
-             <div 
-               className="w-7 h-7 rounded-full border border-border shadow-md flex items-center justify-center bg-background hover:shadow-lg transition-shadow cursor-pointer"
-               onClick={() => window.open(`https://wa.me/${business.phone.replace(/[^\d]/g, '')}`, '_blank')}
-             >
-               <MessageCircle className="w-3 h-3 text-green-600" />
-             </div>
-           )}
-         </div>
+          <div className="flex items-center gap-2">
+            {business.facebook_page && (
+              <Facebook 
+                className="w-4 h-4 text-blue-600 cursor-pointer hover:opacity-80 transition-opacity"
+                onClick={() => window.open(business.facebook_page, '_blank')}
+              />
+            )}
+            {business.tiktok_url && (
+              <Instagram 
+                className="w-4 h-4 text-pink-600 cursor-pointer hover:opacity-80 transition-opacity"
+                onClick={() => window.open(business.tiktok_url, '_blank')}
+              />
+            )}
+            {business.phone && (
+              <MessageCircle 
+                className="w-4 h-4 text-green-600 cursor-pointer hover:opacity-80 transition-opacity"
+                onClick={() => window.open(`https://wa.me/${business.phone.replace(/[^\d]/g, '')}`, '_blank')}
+              />
+            )}
+          </div>
        </div>
      </Card>
   );
