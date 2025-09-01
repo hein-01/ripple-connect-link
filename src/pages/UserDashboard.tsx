@@ -53,6 +53,8 @@ export default function UserDashboard() {
   const [loadingBusinesses, setLoadingBusinesses] = React.useState(false);
   const [editModalOpen, setEditModalOpen] = React.useState(false);
   const [editingBusiness, setEditingBusiness] = React.useState(null);
+  const [bookmarkedBusinesses, setBookmarkedBusinesses] = React.useState([]);
+  const [loadingBookmarks, setLoadingBookmarks] = React.useState(false);
 
   const fetchUserBusinesses = async () => {
     if (!user?.id) return;
@@ -78,6 +80,79 @@ export default function UserDashboard() {
     }
   };
 
+  const fetchBookmarkedBusinesses = async () => {
+    if (!user?.id) return;
+    
+    setLoadingBookmarks(true);
+    try {
+      const { data, error } = await supabase
+        .from('bookmarks')
+        .select(`
+          id,
+          created_at,
+          businesses (
+            id,
+            name,
+            description,
+            category,
+            city,
+            state,
+            rating,
+            image_url,
+            website,
+            product_images,
+            business_options,
+            starting_price,
+            license_expired_date,
+            products_catalog,
+            facebook_page,
+            tiktok_url,
+            phone
+          )
+        `)
+        .eq('user_id', user.id)
+        .order('created_at', { ascending: false });
+      
+      if (error) {
+        console.error('Error fetching bookmarks:', error);
+        return;
+      }
+      
+      // Transform the data to match the expected business format
+      const transformedData = data?.map(bookmark => {
+        const business = bookmark.businesses as any;
+        if (!business) return null;
+        return {
+          id: business.id,
+          name: business.name,
+          description: business.description,
+          category: business.category,
+          city: business.city,
+          state: business.state,
+          rating: business.rating,
+          image_url: business.image_url,
+          website: business.website,
+          product_images: business.product_images,
+          business_options: business.business_options,
+          starting_price: business.starting_price,
+          license_expired_date: business.license_expired_date,
+          products_catalog: business.products_catalog,
+          facebook_page: business.facebook_page,
+          tiktok_url: business.tiktok_url,
+          phone: business.phone,
+          bookmarkId: bookmark.id,
+          bookmarkedAt: bookmark.created_at
+        };
+      }).filter(Boolean) || [];
+      
+      setBookmarkedBusinesses(transformedData);
+    } catch (error) {
+      console.error('Error:', error);
+    } finally {
+      setLoadingBookmarks(false);
+    }
+  };
+
   const handleSidebarAction = (action: string) => {
     setActiveSection(action);
     
@@ -85,6 +160,8 @@ export default function UserDashboard() {
       navigate("/list-&-get-pos-website");
     } else if (action === "listings" || action === "subscription") {
       fetchUserBusinesses();
+    } else if (action === "wishlists") {
+      fetchBookmarkedBusinesses();
     }
   };
 
@@ -156,13 +233,32 @@ export default function UserDashboard() {
         return (
           <div className="space-y-6">
             <h2 className="text-2xl font-bold">Saved Listings</h2>
-            <Card>
-              <CardContent className="pt-6">
-                <p className="text-muted-foreground text-center py-8">
-                  No wishlists created yet. Start exploring businesses to create your first wishlist!
-                </p>
-              </CardContent>
-            </Card>
+            {loadingBookmarks ? (
+              <div className="text-center py-8">
+                <p className="text-muted-foreground">Loading your saved businesses...</p>
+              </div>
+            ) : bookmarkedBusinesses.length > 0 ? (
+              <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+                {bookmarkedBusinesses.map((business) => (
+                  <div key={business.id} className="relative">
+                    <div className="absolute top-2 left-2 z-40">
+                      <div className="bg-primary text-primary-foreground px-2 py-1 rounded text-xs font-medium">
+                        Saved {new Date(business.bookmarkedAt).toLocaleDateString()}
+                      </div>
+                    </div>
+                    <PopularBusinessCard business={business} />
+                  </div>
+                ))}
+              </div>
+            ) : (
+              <Card>
+                <CardContent className="pt-6">
+                  <p className="text-muted-foreground text-center py-8">
+                    No saved listings yet. Start exploring businesses and bookmark your favorites!
+                  </p>
+                </CardContent>
+              </Card>
+            )}
           </div>
         );
 
