@@ -4,7 +4,10 @@ import { Button } from '@/components/ui/button';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { Textarea } from '@/components/ui/textarea';
 import { Label } from '@/components/ui/label';
-import { Facebook, Instagram, MessageCircle, Bookmark, Check, BadgeCheck, MapPin, ChevronRight, ChevronLeft, Star } from 'lucide-react';
+import { Bookmark, Check, BadgeCheck, MapPin, ChevronRight, ChevronLeft, Star } from 'lucide-react';
+import facebookIcon from "@/assets/facebook-icon.jpg";
+import tiktokIcon from "@/assets/tiktok-icon.jpg";
+import phoneIcon from "@/assets/phone-icon.jpg";
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation, Pagination } from 'swiper/modules';
 import { useToast } from '@/hooks/use-toast';
@@ -466,20 +469,26 @@ export const PopularBusinessCard = ({ business }: PopularBusinessCardProps) => {
          
           <div className="flex items-center gap-2">
             {business.facebook_page && (
-              <Facebook 
-                className="w-4 h-4 text-blue-600 cursor-pointer hover:opacity-80 transition-opacity"
+              <img 
+                src={facebookIcon}
+                alt="Facebook"
+                className="w-4 h-4 cursor-pointer hover:opacity-80 transition-opacity"
                 onClick={() => window.open(business.facebook_page, '_blank')}
               />
             )}
             {business.tiktok_url && (
-              <Instagram 
-                className="w-4 h-4 text-pink-600 cursor-pointer hover:opacity-80 transition-opacity"
+              <img 
+                src={tiktokIcon}
+                alt="TikTok"
+                className="w-4 h-4 cursor-pointer hover:opacity-80 transition-opacity"
                 onClick={() => window.open(business.tiktok_url, '_blank')}
               />
             )}
             {business.phone && (
-              <MessageCircle 
-                className="w-4 h-4 text-green-600 cursor-pointer hover:opacity-80 transition-opacity"
+              <img 
+                src={phoneIcon}
+                alt="WhatsApp"
+                className="w-4 h-4 cursor-pointer hover:opacity-80 transition-opacity"
                 onClick={() => window.open(`https://wa.me/${business.phone.replace(/[^\d]/g, '')}`, '_blank')}
               />
             )}
