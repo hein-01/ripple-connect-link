@@ -472,7 +472,7 @@ export const PopularBusinessCard = ({ business }: PopularBusinessCardProps) => {
               <img 
                 src={facebookIcon}
                 alt="Facebook"
-                className="w-6 h-6 cursor-pointer hover:opacity-80 transition-opacity"
+                className="w-6 h-6 rounded-lg cursor-pointer hover:opacity-80 transition-opacity"
                 onClick={() => window.open(business.facebook_page, '_blank')}
               />
             )}
@@ -480,7 +480,7 @@ export const PopularBusinessCard = ({ business }: PopularBusinessCardProps) => {
               <img 
                 src={tiktokIcon}
                 alt="TikTok"
-                className="w-6 h-6 cursor-pointer hover:opacity-80 transition-opacity"
+                className="w-6 h-6 rounded-lg cursor-pointer hover:opacity-80 transition-opacity"
                 onClick={() => window.open(business.tiktok_url, '_blank')}
               />
             )}
@@ -488,7 +488,7 @@ export const PopularBusinessCard = ({ business }: PopularBusinessCardProps) => {
               <img 
                 src={phoneIcon}
                 alt="WhatsApp"
-                className="w-6 h-6 cursor-pointer hover:opacity-80 transition-opacity"
+                className="w-6 h-6 rounded-lg cursor-pointer hover:opacity-80 transition-opacity"
                 onClick={() => window.open(`https://wa.me/${business.phone.replace(/[^\d]/g, '')}`, '_blank')}
               />
             )}
