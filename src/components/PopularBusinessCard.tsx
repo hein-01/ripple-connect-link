@@ -47,6 +47,8 @@ export const PopularBusinessCard = ({ business }: PopularBusinessCardProps) => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [existingReviews, setExistingReviews] = useState<any[]>([]);
   const [loadingReviews, setLoadingReviews] = useState(false);
+  const [isBookmarked, setIsBookmarked] = useState(false);
+  const [isBookmarkLoading, setIsBookmarkLoading] = useState(false);
   const { toast } = useToast();
 
   // Fetch existing reviews when modal opens
@@ -55,6 +57,30 @@ export const PopularBusinessCard = ({ business }: PopularBusinessCardProps) => {
       fetchReviews();
     }
   }, [openReviewModal, business.id]);
+
+  // Check if business is bookmarked when component mounts
+  useEffect(() => {
+    checkBookmarkStatus();
+  }, [business.id]);
+
+  const checkBookmarkStatus = async () => {
+    try {
+      const { data: { user } } = await supabase.auth.getUser();
+      if (!user) return;
+
+      const { data, error } = await supabase
+        .from('bookmarks')
+        .select('id')
+        .eq('user_id', user.id)
+        .eq('business_id', business.id)
+        .maybeSingle();
+
+      if (error) throw error;
+      setIsBookmarked(!!data);
+    } catch (error) {
+      console.error('Error checking bookmark status:', error);
+    }
+  };
 
   const fetchReviews = async () => {
     setLoadingReviews(true);
@@ -156,6 +182,65 @@ export const PopularBusinessCard = ({ business }: PopularBusinessCardProps) => {
       });
     } finally {
       setIsSubmitting(false);
+    }
+  };
+
+  const handleBookmarkToggle = async () => {
+    setIsBookmarkLoading(true);
+    
+    try {
+      const { data: { user } } = await supabase.auth.getUser();
+      
+      if (!user) {
+        toast({
+          title: "Authentication required",
+          description: "Please sign in to bookmark businesses.",
+          variant: "destructive",
+        });
+        return;
+      }
+
+      if (isBookmarked) {
+        // Remove bookmark
+        const { error } = await supabase
+          .from('bookmarks')
+          .delete()
+          .eq('user_id', user.id)
+          .eq('business_id', business.id);
+
+        if (error) throw error;
+
+        setIsBookmarked(false);
+        toast({
+          title: "Bookmark removed",
+          description: "Business removed from your bookmarks.",
+        });
+      } else {
+        // Add bookmark
+        const { error } = await supabase
+          .from('bookmarks')
+          .insert({
+            user_id: user.id,
+            business_id: business.id,
+          });
+
+        if (error) throw error;
+
+        setIsBookmarked(true);
+        toast({
+          title: "Business bookmarked",
+          description: "Business added to your bookmarks.",
+        });
+      }
+    } catch (error) {
+      console.error('Error toggling bookmark:', error);
+      toast({
+        title: "Error",
+        description: "Failed to update bookmark. Please try again.",
+        variant: "destructive",
+      });
+    } finally {
+      setIsBookmarkLoading(false);
     }
   };
 
@@ -291,8 +376,14 @@ export const PopularBusinessCard = ({ business }: PopularBusinessCardProps) => {
           variant="ghost"
           size="sm"
           className="absolute top-2 right-2 px-1 py-2 h-auto w-6 bg-white/80 hover:bg-white z-40"
+          onClick={handleBookmarkToggle}
+          disabled={isBookmarkLoading}
         >
-          <Bookmark className="w-3 h-3 text-gray-600" />
+          <Bookmark 
+            className={`w-3 h-3 transition-colors ${
+              isBookmarked ? 'text-primary fill-primary' : 'text-gray-600'
+            }`} 
+          />
         </Button>
       </div>
       

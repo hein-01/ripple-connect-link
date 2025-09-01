@@ -44,6 +44,30 @@ export type Database = {
         }
         Relationships: []
       }
+      bookmarks: {
+        Row: {
+          business_id: string
+          created_at: string
+          id: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          business_id: string
+          created_at?: string
+          id?: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          business_id?: string
+          created_at?: string
+          id?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       business_categories: {
         Row: {
           created_at: string
