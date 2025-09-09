@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { useSearchParams } from "react-router-dom";
 import { Navbar } from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { PopularBusinessCard } from "@/components/PopularBusinessCard";
@@ -28,6 +29,7 @@ interface Business {
 }
 
 export default function FindShops() {
+  const [searchParams] = useSearchParams();
   const [businesses, setBusinesses] = useState<Business[]>([]);
   const [categories, setCategories] = useState<string[]>([]);
   const [loading, setLoading] = useState(true);
@@ -43,7 +45,13 @@ export default function FindShops() {
 
   useEffect(() => {
     fetchCategories();
-  }, []);
+    
+    // Get search term from URL params
+    const urlSearchTerm = searchParams.get('search');
+    if (urlSearchTerm) {
+      setSearchTerm(urlSearchTerm);
+    }
+  }, [searchParams]);
 
   useEffect(() => {
     setCurrentPage(0);
@@ -166,6 +174,8 @@ export default function FindShops() {
           onCategoryChange={setSelectedCategory}
           onLocationChange={setLocationFilter}
           categories={categories}
+          initialSearchTerm={searchTerm}
+          initialCategory={selectedCategory}
         />
 
         <div className="mt-8">

@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Search, ShoppingBag, Compass } from "lucide-react";
 import { useTypingEffect } from "@/hooks/useTypingEffect";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Navbar } from "@/components/Navbar";
 import BusinessDirectory from "./BusinessDirectory";
 import PopularBusinesses from "@/components/PopularBusinesses";
@@ -28,6 +28,7 @@ const Index = () => {
   const [selectedCategory, setSelectedCategory] = useState("product");
   const [currentBgIndex, setCurrentBgIndex] = useState(0);
   const typingPlaceholder = useTypingEffect("Search by business name, etc", 20);
+  const navigate = useNavigate();
 
   const heroBackgrounds = [heroBg1, heroBg2, heroBg3];
   const heroBackgroundsMobile = [heroBgMobile1, heroBgMobile2, heroBgMobile3];
@@ -45,6 +46,13 @@ const Index = () => {
 
     return () => clearInterval(interval);
   }, []);
+
+  const handleSearchSubmit = (e?: React.FormEvent) => {
+    if (e) e.preventDefault();
+    if (searchTerm.trim()) {
+      navigate(`/find-shops?search=${encodeURIComponent(searchTerm.trim())}`);
+    }
+  };
 
   console.log('Index component returning JSX...'); // Debug log
   
@@ -117,10 +125,14 @@ const Index = () => {
               placeholder={typingPlaceholder}
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
+              onKeyDown={(e) => e.key === 'Enter' && handleSearchSubmit()}
               className="flex-1 border-0 text-gray-600 placeholder-gray-400 focus-visible:ring-0 text-sm sm:text-base placeholder:text-xs sm:placeholder:text-sm"
             />
             
-            <Button className="bg-transparent hover:bg-transparent text-muted-foreground px-3 py-2 rounded-md flex items-center justify-center">
+            <Button 
+              onClick={handleSearchSubmit}
+              className="bg-transparent hover:bg-transparent text-muted-foreground px-3 py-2 rounded-md flex items-center justify-center"
+            >
               <Search className="h-10 w-10" strokeWidth={3} />
             </Button>
           </div>

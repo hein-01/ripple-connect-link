@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
@@ -10,6 +10,8 @@ interface SearchFiltersProps {
   onCategoryChange: (category: string) => void;
   onLocationChange: (location: string) => void;
   categories: string[];
+  initialSearchTerm?: string;
+  initialCategory?: string;
 }
 
 export const SearchFilters = ({
@@ -17,9 +19,15 @@ export const SearchFilters = ({
   onCategoryChange,
   onLocationChange,
   categories,
+  initialSearchTerm = "",
+  initialCategory = "all",
 }: SearchFiltersProps) => {
-  const [search, setSearch] = useState("");
+  const [search, setSearch] = useState(initialSearchTerm);
   const [location, setLocation] = useState("");
+
+  useEffect(() => {
+    setSearch(initialSearchTerm);
+  }, [initialSearchTerm]);
 
   const handleSearchSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -52,7 +60,7 @@ export const SearchFilters = ({
           </form>
           
           {/* Category Filter */}
-          <Select onValueChange={onCategoryChange}>
+          <Select onValueChange={onCategoryChange} defaultValue={initialCategory}>
             <SelectTrigger>
               <SelectValue placeholder="All Categories" />
             </SelectTrigger>
