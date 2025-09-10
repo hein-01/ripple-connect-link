@@ -5,6 +5,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Badge } from "@/components/ui/badge";
 import { Navbar } from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import { BackButton } from "@/components/BackButton";
 import { 
   ShoppingCart, 
   Globe, 
@@ -105,6 +106,11 @@ const ListAndGetPOS = () => {
   return (
     <div className="min-h-screen bg-background">
       <Navbar />
+      
+      {/* Back Button */}
+      <div className="container mx-auto px-4 pt-6">
+        <BackButton />
+      </div>
       
       {/* Hero Section */}
       <section className="relative py-20 px-4">
