@@ -5,13 +5,18 @@ import { Button } from "@/components/ui/button";
 interface BackButtonProps {
   to?: string;
   className?: string;
+  onClick?: () => void;
 }
 
-export const BackButton = ({ to = "/dashboard", className = "" }: BackButtonProps) => {
+export const BackButton = ({ to = "/dashboard", className = "", onClick }: BackButtonProps) => {
   const navigate = useNavigate();
 
   const handleClick = () => {
-    navigate(to);
+    if (onClick) {
+      onClick();
+    } else {
+      navigate(to);
+    }
   };
 
   return (

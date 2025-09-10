@@ -348,7 +348,11 @@ export default function UserDashboard() {
       case "wishlists":
         return (
           <div className="space-y-6 animate-fade-in">
-            <BackButton to="/dashboard" />
+            <BackButton 
+              to="/dashboard" 
+              className=""
+              onClick={() => setActiveSection("dashboard")} 
+            />
             <h2 className="text-3xl font-bold bg-gradient-to-r from-dashboard-gradient-start to-dashboard-gradient-end bg-clip-text text-transparent">Saved Listings</h2>
             {loadingBookmarks ? (
               <div className="text-center py-8">
@@ -375,7 +379,11 @@ export default function UserDashboard() {
       case "listings":
         return (
           <div className="space-y-6 animate-fade-in">
-            <BackButton to="/dashboard" />
+            <BackButton 
+              to="/dashboard" 
+              className=""
+              onClick={() => setActiveSection("dashboard")} 
+            />
             <h2 className="text-3xl font-bold bg-gradient-to-r from-dashboard-gradient-start to-dashboard-gradient-end bg-clip-text text-transparent">My Business Listings</h2>
             {loadingBusinesses ? (
               <div className="text-center py-8">
@@ -421,7 +429,11 @@ export default function UserDashboard() {
       case "add-listing":
         return (
           <div className="space-y-6 animate-fade-in">
-            <BackButton to="/dashboard" />
+            <BackButton 
+              to="/dashboard" 
+              className=""
+              onClick={() => setActiveSection("dashboard")} 
+            />
             <h2 className="text-3xl font-bold bg-gradient-to-r from-dashboard-gradient-start to-dashboard-gradient-end bg-clip-text text-transparent">List Your Business</h2>
             <BusinessForm onSuccess={() => {
               setActiveSection("listings");
