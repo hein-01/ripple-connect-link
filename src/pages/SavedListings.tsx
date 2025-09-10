@@ -5,6 +5,7 @@ import { PopularBusinessCard } from "@/components/PopularBusinessCard";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
+import { LoadingSpinner } from "@/components/LoadingSpinner";
 import MobileNavBar from "@/components/MobileNavBar";
 
 export default function SavedListings() {
@@ -120,9 +121,7 @@ export default function SavedListings() {
               Saved Listings
             </h1>
             {loadingBookmarks ? (
-              <div className="text-center py-8">
-                <p className="text-muted-foreground">Loading your saved businesses...</p>
-              </div>
+              <LoadingSpinner />
             ) : bookmarkedBusinesses.length > 0 ? (
               <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
                 {bookmarkedBusinesses.map((business) => (

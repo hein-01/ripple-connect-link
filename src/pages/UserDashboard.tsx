@@ -4,6 +4,7 @@ import { useAuth } from "@/hooks/useAuth";
 import { Navbar } from "@/components/Navbar";
 import { PopularBusinessCard } from "@/components/PopularBusinessCard";
 import { BackButton } from "@/components/BackButton";
+import { LoadingSpinner } from "@/components/LoadingSpinner";
 import { supabase } from "@/integrations/supabase/client";
 import BusinessForm from "@/components/BusinessForm";
 import UpgradeModal from "@/components/UpgradeModal";
@@ -355,9 +356,7 @@ export default function UserDashboard() {
             />
             <h2 className="text-3xl font-bold bg-gradient-to-r from-dashboard-gradient-start to-dashboard-gradient-end bg-clip-text text-transparent">Saved Listings</h2>
             {loadingBookmarks ? (
-              <div className="text-center py-8">
-                <p className="text-muted-foreground">Loading your saved businesses...</p>
-              </div>
+              <LoadingSpinner />
             ) : bookmarkedBusinesses.length > 0 ? (
               <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
                 {bookmarkedBusinesses.map((business) => (
@@ -386,9 +385,7 @@ export default function UserDashboard() {
             />
             <h2 className="text-3xl font-bold bg-gradient-to-r from-dashboard-gradient-start to-dashboard-gradient-end bg-clip-text text-transparent">My Business Listings</h2>
             {loadingBusinesses ? (
-              <div className="text-center py-8">
-                <p className="text-muted-foreground">Loading your businesses...</p>
-              </div>
+              <LoadingSpinner />
             ) : userBusinesses.length > 0 ? (
               <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
                 {userBusinesses.map((business) => (
@@ -495,11 +492,7 @@ export default function UserDashboard() {
                 Upgrade Listings
               </h3>
               {loadingBusinesses ? (
-                <Card>
-                  <CardContent className="py-8">
-                    <p className="text-muted-foreground text-center">Loading your businesses...</p>
-                  </CardContent>
-                </Card>
+                <LoadingSpinner />
               ) : userBusinesses.length > 0 ? (
                 <Card>
                   <CardContent className="p-0">
