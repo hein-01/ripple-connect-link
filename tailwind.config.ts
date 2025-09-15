@@ -144,24 +144,24 @@ export default {
 				},
 				'shift-glow': {
 					'0%': { 
-						'filter': 'drop-shadow(0 0 15px hsl(var(--primary))) brightness(1)',
+						'filter': 'drop-shadow(0 0 8px hsl(var(--primary))) brightness(1)',
 						'background-size': '200% 100%',
 						'background-position': '0% 50%'
 					},
 					'25%': { 
-						'filter': 'drop-shadow(0 0 25px hsl(220 90% 56%)) brightness(1.1)',
+						'filter': 'drop-shadow(0 0 12px hsl(220 90% 56%)) brightness(1.1)',
 						'background-position': '25% 50%'
 					},
 					'50%': { 
-						'filter': 'drop-shadow(0 0 30px hsl(280 90% 56%)) brightness(1.2)',
+						'filter': 'drop-shadow(0 0 15px hsl(280 90% 56%)) brightness(1.2)',
 						'background-position': '100% 50%'
 					},
 					'75%': { 
-						'filter': 'drop-shadow(0 0 25px hsl(220 90% 56%)) brightness(1.1)',
+						'filter': 'drop-shadow(0 0 12px hsl(220 90% 56%)) brightness(1.1)',
 						'background-position': '75% 50%'
 					},
 					'100%': { 
-						'filter': 'drop-shadow(0 0 15px hsl(var(--primary))) brightness(1)',
+						'filter': 'drop-shadow(0 0 8px hsl(var(--primary))) brightness(1)',
 						'background-position': '0% 50%'
 					}
 				}
