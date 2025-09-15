@@ -39,7 +39,7 @@ export const Navbar = React.memo(() => {
           <div className="flex items-center">
             <Link to="/" className="flex items-center space-x-2 relative z-50 md:ml-6">
               <Building2 className="h-6 w-6 text-primary border border-gray-300 rounded p-1" />
-              <span className="text-xl font-bold text-foreground bg-gradient-to-r from-primary via-blue-500 to-purple-500 bg-clip-text text-transparent animate-[shift-glow_3s_ease-in-out_infinite] drop-shadow-[0_0_15px_theme(colors.primary)] hover:drop-shadow-[0_0_25px_theme(colors.primary)]">MyanShops</span>
+              <span className="text-xl font-bold text-foreground bg-gradient-to-r from-primary via-blue-500 to-purple-500 bg-clip-text text-transparent animate-[shift-glow_3s_ease-in-out_infinite]">MyanShops</span>
             </Link>
           </div>
 
