@@ -45,10 +45,6 @@ export const Navbar = React.memo(() => {
 
           {/* Desktop Right Side Actions */}
           <div className="hidden md:flex items-center space-x-4">
-            <Button variant="ghost" size="sm" className="flex items-center space-x-1">
-              <Smartphone className="h-4 w-4" />
-              <span>Get App</span>
-            </Button>
             <Link
               to="/find-shops"
               className="text-muted-foreground hover:text-foreground font-medium"
