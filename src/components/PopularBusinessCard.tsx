@@ -401,8 +401,8 @@ export const PopularBusinessCard = ({ business }: PopularBusinessCardProps) => {
         </Button>
       </div>
       
-      {/* Green section with See Products button - positioned at exactly 291px from top */}
-      <div className="absolute top-[291px] left-0 w-full h-[30px] bg-green-600 flex items-center justify-between px-4 z-10">
+      {/* Black section with See Products button - positioned at exactly 290px from top */}
+      <div className="absolute top-[290px] left-0 w-full h-[30px] bg-black flex items-center justify-between px-4 z-10">
         <Dialog open={openModal} onOpenChange={setOpenModal}>
           <DialogTrigger asChild>
             <Button 
