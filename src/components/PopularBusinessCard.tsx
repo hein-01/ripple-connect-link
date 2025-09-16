@@ -401,13 +401,13 @@ export const PopularBusinessCard = ({ business }: PopularBusinessCardProps) => {
         </Button>
       </div>
       
-      {/* Black section with See Products button - positioned at exactly 290px from top */}
-      <div className="absolute top-[290px] left-0 w-full h-[30px] bg-black flex items-center justify-between px-4 z-10">
+      {/* Rectangular section with See Products button - positioned at exactly 290px from top */}
+      <div className="absolute top-[290px] left-0 w-full h-[30px] flex items-center justify-between px-4 z-10" style={{ backgroundColor: '#F1F5F9' }}>
         <Dialog open={openModal} onOpenChange={setOpenModal}>
           <DialogTrigger asChild>
             <Button 
               variant="outline" 
-              className="h-5 text-xs px-1 bg-[#F5F8FA] hover:bg-[#E8EEF2] border-border -ml-1"
+              className="h-5 text-xs px-1 bg-[#F5F8FA] hover:bg-[#E8EEF2] border-border -ml-1 rounded-sm"
             >
               See Products List
             </Button>
@@ -417,8 +417,8 @@ export const PopularBusinessCard = ({ business }: PopularBusinessCardProps) => {
         <div className="flex items-center gap-1">
           {isLicenseValid(business.license_expired_date) && (
             <>
-              <BadgeCheck className="w-3 h-3 text-white" />
-              <span className="text-white text-xs font-medium">VERIFIED</span>
+              <BadgeCheck className="w-3 h-3 text-black" />
+              <span className="text-black text-xs font-medium">VERIFIED</span>
             </>
           )}
         </div>
