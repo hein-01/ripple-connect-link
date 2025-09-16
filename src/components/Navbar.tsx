@@ -33,13 +33,12 @@ export const Navbar = React.memo(() => {
   ], []);
 
   return (
-    <nav className="fixed top-0 left-0 right-0 z-50 bg-background border-b border-border">
+    <nav className="fixed top-0 left-0 right-0 z-50 bg-navbar border-b border-border">
       <div className="container mx-auto px-4">
         <div className="flex items-center justify-between h-16">
           {/* Left Side - Logo */}
           <div className="flex items-center">
             <Link to="/" className="flex items-center space-x-2 relative z-50 md:ml-6">
-              <img src={MyanShopsLogo} alt="MyanShops Logo" className="h-8 w-8" />
               <span className="text-xl font-bold text-foreground bg-gradient-to-r from-primary via-blue-500 to-purple-500 bg-clip-text text-transparent animate-[shift-glow_3s_ease-in-out_infinite]">MyanShops</span>
             </Link>
           </div>
