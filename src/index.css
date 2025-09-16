@@ -37,6 +37,7 @@ All colors MUST be HSL.
     --ring: 222.2 84% 4.9%;
 
     --navbar: 240 20% 96.5%;
+    --nav-text: 210 20% 14%;
 
     --radius: 0.5rem;
 
@@ -116,6 +117,7 @@ All colors MUST be HSL.
     --ring: 212.7 26.8% 83.9%;
     
     --navbar: 240 20% 96.5%;
+    --nav-text: 210 20% 14%;
     --sidebar-background: 240 5.9% 10%;
     --sidebar-foreground: 240 4.8% 95.9%;
     --sidebar-primary: 224.3 76.3% 48%;

@@ -69,6 +69,7 @@ export default {
 					background: 'hsl(var(--footer-background))'
 				},
 				navbar: 'hsl(var(--navbar))',
+				'nav-text': 'hsl(var(--nav-text))',
 				dashboard: {
 					bg: 'hsl(var(--dashboard-bg))',
 					'card-bg': 'hsl(var(--dashboard-card-bg))',
